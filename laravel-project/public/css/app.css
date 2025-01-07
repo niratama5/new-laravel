@@ -1,0 +1,74 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/*ここからヘッダー*/
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+#header_logo {
+  width: 160px;
+}
+
+header img {
+  max-width: 100%;
+}
+
+#login {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  column-gap: 8px;
+}
+
+input[name='query'] {
+  width: 800px;
+}
+
+/*ここまでヘッダー*/
+
+/*ここからメイン*/
+main {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+#news_container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/*ここまでメイン*/
+
+/*ここからフッター*/
+footer {
+  background-color: #a0a0a0;
+}
+
+footer div {
+  display: grid;
+  text-align: center;
+}
+
+small {
+  grid-column: auto;
+}
+
+
+@media screen and (max-width:1200px) {
+  input[name="query"] {
+    width: 200px;
+  }
+
+  main {
+    width: 800px;
+  }
+}
+
+/*ここまでフッター*/
