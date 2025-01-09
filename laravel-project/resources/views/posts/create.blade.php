@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+<x-app-layout>
 <div id="newpost_container">
   <h1>新規投稿</h1>
   <form action="{{route('posts.save')}}" method="POST">
@@ -17,4 +16,4 @@
       <button type="submit" id="post_button">投稿</button>
   </form>
 </div>
-@endsection
+</x-app-layout>

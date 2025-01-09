@@ -51,6 +51,9 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             <a href="{{route('threads')}}">{{ __('記事一覧') }}</a>
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('profile.edit')">
+                            <a href="{{route('posts.create')}}">{{ __('新規投稿') }}</a>
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>

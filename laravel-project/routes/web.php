@@ -21,11 +21,12 @@ Route::get('/home',[ViewController::class,'index'])->name('home');
 
 Route::get('/threads',[ThreadController::class,'index'])->name('threads')->withoutMiddleware('auth');
 
-Route::get('/threads/show-create',[NewPostController::class,'create'])->name('posts.create');
-Route::post('/threads/create',[NewPostController::class,'save'])->name('posts.save');
+Route::get('/threads/show-create',[ThreadController::class,'create'])->name('posts.create');
+Route::post('/threads/create',[ThreadController::class,'store'])->name('posts.save');
 
 Route::get('/threads/{id}/edit',[ThreadController::class,'edit'])->name('threads.edit');
 Route::put('/threads/{id}',[ThreadController::class,'update'])->name('threads.update');
+Route::delete('/threads/{id}/delete',[ThreadController::class,'destroy'])->name('threads.delete');
 
 Route::get('/', function () {
     return view('welcome');

@@ -13,7 +13,8 @@ class ThreadController extends Controller
      */
     public function index()
     {
-      $threads=BulletinThread::orderBy('created_at','desc')->get();
+      $user_id=Auth::id();
+      $threads=BulletinThread::where('deleted_at',false)->where('user_id',$user_id)->orderBy('created_at','desc')->get();
 
       return view('threads.index',compact('threads'));
         //
@@ -24,15 +25,27 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+      return view('posts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+      $validated=$request->validate([
+        'thread_title'=>'required|string|max:255',
+        'post_content'=>'required|string',
+      ]);
+
+      $userId=1;//テスト用
+
+      BulletinThread::create([
+        'thread_title'=>$validated['thread_title'],
+        'post_content'=>$validated['post_content'],
+        'user_id'=>Auth::id(),
+        //'user_id'=>Auth::id(),//IDを取得してる
+      ]);
+
+      //return redirect()->action([ViewController::class,'index']);
+      return redirect()->route('dashboard')->with('success','新しいスレッドが作成されました！');
     }
 
     /**
@@ -48,8 +61,9 @@ class ThreadController extends Controller
      */
     public function edit(string $id)
     {
+      $user_id=Auth::id();
       $thread=BulletinThread::where('thread_id',$id)
-            ->where('user_id',Auth::id())
+            ->where('user_id',$user_id)
             ->firstOrFail();
       return view('threads.edit',compact('thread'));
         //
@@ -77,8 +91,16 @@ class ThreadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $thread_id)
     {
+      $thread=BulletinThread::find($thread_id);
+      $thread->delete();
+      return redirect()->route('threads')->with('success','スレッドが削除されました');
         //
+    }
+
+    public function logical_delete()
+    {
+      
     }
 }
