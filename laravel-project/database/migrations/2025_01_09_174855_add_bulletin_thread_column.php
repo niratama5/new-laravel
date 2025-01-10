@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
       Schema::table('bulletin_thread',function(Blueprint $table){
-        $table->boolean('deleted_at');
+        $table->boolean('deleted_at')
+              ->default(false);
       });
         //
     }

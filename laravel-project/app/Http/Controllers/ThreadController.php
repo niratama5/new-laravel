@@ -99,8 +99,10 @@ class ThreadController extends Controller
         //
     }
 
-    public function logical_delete()
+    public function logical_delete(string $thread_id)
     {
-      
+      $user_id=Auth::id();
+      $thread=BulletinThread::where($user_id,)->where($thread_id);
+      dd($thread);
     }
 }

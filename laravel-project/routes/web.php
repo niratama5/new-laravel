@@ -27,6 +27,7 @@ Route::post('/threads/create',[ThreadController::class,'store'])->name('posts.sa
 Route::get('/threads/{id}/edit',[ThreadController::class,'edit'])->name('threads.edit');
 Route::put('/threads/{id}',[ThreadController::class,'update'])->name('threads.update');
 Route::delete('/threads/{id}/delete',[ThreadController::class,'destroy'])->name('threads.delete');
+Route::delete('/threads/{id}/local_delete',[ThreadController::class,'logical_delete'])->name('threads.logical_delete');
 
 Route::get('/', function () {
     return view('welcome');

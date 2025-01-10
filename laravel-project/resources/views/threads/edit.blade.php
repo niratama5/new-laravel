@@ -35,6 +35,11 @@
                       @method('DELETE')
                       <button type="submit">削除</button>
                     </form>
+                    <form method="POST" action="{{route('threads.logical_delete',$thread->thread_id)}}">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit">論理削除</button>
+                    </form>
 
                 </div>
             </div>
