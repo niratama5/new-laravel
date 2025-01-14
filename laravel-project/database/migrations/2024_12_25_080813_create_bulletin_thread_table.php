@@ -22,14 +22,10 @@ return new class extends Migration
             $table->string('post_content',255)
                   ->nullable(false);
 
-            $table->datetime('created_at')
-            ->nullable(false);
+            $table->timestamps();
 
-            $table->datetime('updated_at')
-            ->nullable(false);
-
-            $table->datetime('deleted_at')
-            ->nullable()->default(null);
+            $table->boolean('deleted_at')
+                  ->default(false);
 
             $table->foreign('user_id')
             ->references('id')

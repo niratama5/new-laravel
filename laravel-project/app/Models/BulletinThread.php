@@ -16,7 +16,6 @@ class BulletinThread extends Model
     protected $fillable=[
       'thread_title',
       'post_content',
-      'user_id',
     ];
 
     // 日付を扱うカラムを設定（もしあれば）

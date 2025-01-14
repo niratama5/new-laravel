@@ -13,8 +13,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-      $user_id=Auth::id();
-      $threads=BulletinThread::where('deleted_at',false)->where('user_id',$user_id)->orderBy('created_at','desc')->get();
+      $threads=BulletinThread::where('deleted_at',false)->orderBy('created_at','desc')->get();
 
       return view('threads.index',compact('threads'));
         //
@@ -35,8 +34,6 @@ class ThreadController extends Controller
         'post_content'=>'required|string',
       ]);
 
-      $userId=1;//テスト用
-
       BulletinThread::create([
         'thread_title'=>$validated['thread_title'],
         'post_content'=>$validated['post_content'],
@@ -45,7 +42,7 @@ class ThreadController extends Controller
       ]);
 
       //return redirect()->action([ViewController::class,'index']);
-      return redirect()->route('dashboard')->with('success','新しいスレッドが作成されました！');
+      return redirect()->route('threads')->with('success','新しいスレッドが作成されました！');
     }
 
     /**
@@ -59,14 +56,22 @@ class ThreadController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    
+    public function showedit()
+    {
+      $user_id=Auth::id();
+      $threads=BulletinThread::where('user_id',$user_id)
+              ->where('deleted_at',false)->orderBy('created_at','desc')->get();
+      return view('threads.edit',compact('threads'));
+        //
+    }
+
     public function edit(string $id)
     {
       $user_id=Auth::id();
-      $thread=BulletinThread::where('thread_id',$id)
-            ->where('user_id',$user_id)
-            ->firstOrFail();
-      return view('threads.edit',compact('thread'));
-        //
+      $thread=BulletinThread::findOrFail($id);
+      
+      return view('threads.update',compact('thread'));
     }
 
     /**
@@ -102,7 +107,25 @@ class ThreadController extends Controller
     public function logical_delete(string $thread_id)
     {
       $user_id=Auth::id();
-      $thread=BulletinThread::where($user_id,)->where($thread_id);
-      dd($thread);
+      $thread=BulletinThread::where('user_id',$user_id,)->where('thread_id',$thread_id);
+      $thread->update(['deleted_at'=>true]);
+      return redirect()->route('threads')->with('success','スレッドが論理削除されました');
+    }
+
+    public function showdeleted()
+    {
+      $user_id=Auth::id();
+      $threads=BulletinThread::where('deleted_at',true)->where('user_id',$user_id)->orderBy('created_at','desc')->get();
+
+      return view('threads.deleted',compact('threads'));
+    }
+
+    public function rollback(string $thread_id)
+    {
+      $user_id=Auth::id();
+      $thread=BulletinThread::where('user_id',$user_id)->where('thread_id',$thread_id);
+      $thread->update(['deleted_at'=>false]);
+
+      return redirect()->route('threads')->with('success','スレッドが復元されました');
     }
 }

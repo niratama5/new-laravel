@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\NewPostController;
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,10 +25,17 @@ Route::get('/threads',[ThreadController::class,'index'])->name('threads')->witho
 Route::get('/threads/show-create',[ThreadController::class,'create'])->name('posts.create');
 Route::post('/threads/create',[ThreadController::class,'store'])->name('posts.save');
 
+Route::get('/threads/show-logical-deleted',[ThreadController::class,'showdeleted'])->name('show.deleted');
+Route::put('/threads/{id}/rollback',[ThreadController::class,'rollback'])->name('rollback');
+
+Route::get('/threads/show-edit',[ThreadController::class,'showedit'])->name('show.edit');
 Route::get('/threads/{id}/edit',[ThreadController::class,'edit'])->name('threads.edit');
-Route::put('/threads/{id}',[ThreadController::class,'update'])->name('threads.update');
+Route::put('/threads/{id}/update',[ThreadController::class,'update'])->name('threads.update');
 Route::delete('/threads/{id}/delete',[ThreadController::class,'destroy'])->name('threads.delete');
-Route::delete('/threads/{id}/local_delete',[ThreadController::class,'logical_delete'])->name('threads.logical_delete');
+Route::delete('/threads/{id}/logical_delete',[ThreadController::class,'logical_delete'])->name('threads.logical_delete');
+
+Route::get('/threads/{id}/reply',[ReplyController::class,'index'])->name('threads.show-reply');
+Route::post('/threads/{id}/',[ReplyController::class,'store'])->name('threads.reply');
 
 Route::get('/', function () {
     return view('welcome');
