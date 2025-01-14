@@ -31,10 +31,10 @@ class TempRegisterController extends Controller
       'token_limit_time'=>(new Carbon())->addMinutes(10),
     ]);
 
-    $url=route('temp_register.confirm',['token'=>urlencode($tempWrite->token)]);
+    $url=route('register',['token'=>urlencode($tempWrite->token)]);
     Mail::to($tempWrite->mail)->send(new TempRegister($url));
 
-    return redirect()->route('home')->with('success','仮登録が完了しました。メールをご確認ください。またメールが表示されない場合は迷惑メールフォルダを確認の上、必要であればドメインを許可してください。');
+    return redirect()->route('welcome')->with('success','仮登録が完了しました。メールをご確認ください。');
   }
 
   public function complete(Request $request)

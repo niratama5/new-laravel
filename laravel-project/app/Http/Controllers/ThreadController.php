@@ -13,7 +13,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-      $threads=BulletinThread::where('deleted_at',false)->orderBy('created_at','desc')->get();
+      $threads=BulletinThread::where('deleted_at',false)->orderBy('created_at','desc')->paginate(3);
 
       return view('threads.index',compact('threads'));
         //

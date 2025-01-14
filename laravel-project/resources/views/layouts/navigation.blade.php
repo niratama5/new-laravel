@@ -49,16 +49,16 @@
                             </x-dropdown-link>
                         </form>
                         <x-dropdown-link :href="route('threads')">
-                            <a href="{{route('threads')}}">{{ __('記事一覧') }}</a>
+                            {{ __('記事一覧') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('show.deleted')">
-                            <a href="{{route('show.deleted')}}">{{ __('記事の復元') }}</a>
+                            {{ __('記事の復元') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('show.edit')">
-                            <a href="{{route('show.edit')}}">{{ __('記事の編集') }}</a>
+                            {{ __('記事の編集') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('posts.create')">
-                            <a href="{{route('posts.create')}}">{{ __('新規投稿') }}</a>
+                            {{ __('新規投稿') }}
                         </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>

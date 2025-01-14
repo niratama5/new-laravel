@@ -14,6 +14,7 @@ class BulletinThread extends Model
     protected $primaryKey='thread_id';
 
     protected $fillable=[
+      'user_id',
       'thread_title',
       'post_content',
     ];

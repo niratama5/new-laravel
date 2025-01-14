@@ -5,6 +5,7 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\NewPostController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\Auth\TempRegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home',[ViewController::class,'index'])->name('home');
+Route::get('/temp-register',[TempRegisterController::class,'showRegisterForm'])->name('temp-register');
+Route::post('/temp-register/mail',[TempRegisterController::class,'register'])->name('send_email');
+Route::get('/temp-register/confirm/{token}', [TempRegisterController::class, 'confirm'])->name('temp_register.confirm');
 
 Route::get('/threads',[ThreadController::class,'index'])->name('threads')->withoutMiddleware('auth');
 
@@ -39,7 +42,7 @@ Route::post('/threads/{id}/',[ReplyController::class,'store'])->name('threads.re
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
