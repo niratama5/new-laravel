@@ -25,7 +25,7 @@
                             </div>
                             <button class="bg-white h-19px px-4 overflow-hidden shadow-sm sm:rounded-lg" id="show_replies_{{$thread->thread_id}}" data-thread-id="{{$thread->thread_id}}">返信を表示</button>
                           </div>
-                          <div class="ml-8 mb-8" id="replies_container_{{$thread->thread_id}}"></div>
+                          <div class="ml-8 block" data-replies="{{$thread->thread_id}}" id="replies_container_{{$thread->thread_id}}"></div>
                         @endforeach
                         @if ($threads->isEmpty())
                           <p class="text-gray-500">まだ記事がありません</p>
@@ -39,11 +39,12 @@
     <script>
       document.querySelectorAll('[id^="show_replies_"]').forEach(button => {
         button.addEventListener('click',async () => {
-          if(button.dataset.loaded==="true"){//初回データ取得フラグ判定。引っかかるとreturnで何も起きない。
-            return;
-          }
           const threadId = button.getAttribute('data-thread-id');
           const repliesContainer = document.querySelector(`#replies_container_${threadId}`);
+
+          if(button.dataset.loaded){//初回データ取得フラグ判定。引っかかるとreturnで何も起きない。
+            return repliesContainer.classList.toggle('hidden');
+          }
 
           try{
             const response = await fetch(`/api/replies/${threadId}`);
@@ -57,7 +58,7 @@
               </div>
               <hr>
             `).join('');
-            button.dataset.loaded="true";//初回データ取得時のフラグ建て
+            button.dataset.loaded=true;//初回データ取得時のフラグ建て
           }catch(error){
             repliesContainer.innerHTML=`<p>エラー：返信の読み込みに失敗しました</p>`;
           }

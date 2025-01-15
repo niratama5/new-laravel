@@ -19,6 +19,16 @@ class BulletinThread extends Model
       'post_content',
     ];
 
+    public function user()
+    {
+      return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function replies()
+    {
+      return $this->hasMany(BulletinThreadReply::class,'thread_id');
+    }
+
     // 日付を扱うカラムを設定（もしあれば）
     //protected $dates = ['thread_post_time', 'thread_edit_time', 'thread_delete_time'];
 

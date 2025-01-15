@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReplyController;
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\Api\FileControllerV0;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/replies/{threadId}',[ReplyController::class,'getReplies'])->name('api.replies');
 
-// FileController:ファイルのインポートとエクスポートコントローラ
-Route::get('/export',[FileController::class,'get'])->name('export.csv');
+Route::get('/getCsv',[FileControllerV0::class,'getCsv'])->name('api.get.csv');

@@ -23,4 +23,9 @@ class BulletinThreadReply extends Model
     {
       return $this->belongsTo(User::class,'user_id');
     }
+
+    public function thread()
+    {
+      return $this->belongsTo(BulletinThread::class,'thread_id');
+    }
 }
