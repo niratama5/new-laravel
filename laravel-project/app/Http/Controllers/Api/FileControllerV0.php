@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\BulletinThread;
 use App\Models\BulletinThreadReply;
+use Illuminate\Support\Facades\Validator;
 
 
 class FileControllerV0 extends Controller
@@ -122,6 +123,60 @@ class FileControllerV0 extends Controller
     //     // レスポンスを返す
     //     return $response;
     // }
+
+    public function userCsvImport(Request $request)
+    {
+      dd($request);
+      $request->validate([
+        'user_csv'=>'required|file|mimes:csv,txt|max:2048'
+      ]);
+      
+      $userList=$request->file('user_csv');
+
+      $tempPath=$userList->getRealPath();
+
+      $userList=fopen($tempPath,'r');
+
+      dd($userList);
+    }
+
+    public function importCsv(Request $request)
+    {
+      $csvFile=$request->file('csv_file');
+      //$csvFile=$request->files->get('csv_file');//これでも取り出せるけどFileBag経由で操作が必要
+      $request->validate([
+        'csv_file'=>'required|file|mimes:csv,txt|max:2048'//csvまたはtxtファイルかつ2048KBの指定
+      ]);
+
+      $tempPath=$csvFile->getRealPath();//一時ファイルのパス取得
+      
+      $csvFile=fopen($tempPath,"r");
+
+      $headers=fgetcsv($csvFile);
+
+      while(($row=fgetcsv($csvFile,1000,','))!==false){
+        // $csvDatas=fgetcsv($csvFile,1000,',');
+        $data=array_combine($headers,$row);
+        $user=User::where('name',$data['ユーザ名'])->first();
+
+        if($user){
+          BulletinThread::create([
+            'user_id'=>$user->id,
+            'thread_title'=>$data['タイトル'],
+            'post_content'=>$data['投稿内容'],
+          ]);
+        }else{
+          return dd('エラー');
+        }
+      }
+      fclose($csvFile);
+      
+
+      
+      
+
+      
+    }
 
     public function create()
     {

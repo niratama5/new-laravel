@@ -26,3 +26,7 @@ Route::get('/replies/{threadId}',[ReplyController::class,'getReplies'])->name('a
 Route::get('/getCsv',[FileControllerV0::class,'getCsv'])->name('api.get.csv');
 
 Route::post('/getCsvWhere',[FileControllerV1::class,'getCsvWhereV2'])->name('api.where.csv');
+
+Route::post('/importUserCsv',[FileControllerV0::class,'userCsvImport'])->name('api.import.user.csv');
+
+Route::post('/importCsv',[FileControllerV0::class,'importCsv'])->name('api.import.csv');
