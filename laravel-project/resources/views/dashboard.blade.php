@@ -4,12 +4,11 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
+    @if(session('success'))
+        <p>{{session('success')}}</p>
+      @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        @if(session('success'))
-                <p>{{session('success')}}</p>
-              @endif
             <div class="mb-4 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <!-- {{ __("You're logged in!") }} -->
@@ -22,7 +21,8 @@
                 @csrf
                 <label for="wheredate" class="">
                   記事一覧CSVダウンロード
-                  <input type="date" name="wheredate" id="wheredate" class="sm:rounded-lg shadow-sm">
+                  <input type="date" name="wheredate1" id="wheredate1" class="sm:rounded-lg shadow-sm">
+                  <input type="date" name="wheredate2" id="wheredate2" class="sm:rounded-lg shadow-sm">
                 </label>
                 <button type="submit" class="p-2 mt-2 border border-gray-400 sm:rounded-lg shadow-am">CSV出力</button>
               </form>

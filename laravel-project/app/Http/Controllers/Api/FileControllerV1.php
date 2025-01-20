@@ -24,10 +24,11 @@ class FileControllerV1 extends Controller
         'Expires'=>'0',
       ];
 
-      $date=$request->wheredate;
+      $date1=$request->wheredate1;
+      $date2=$request->wheredate2;
       
 
-      $threads=BulletinThread::whereDate('created_at',$date)->with(['user'=>function($query){
+      $threads=BulletinThread::whereBetween('created_at',[$date1,$date2])->with(['user'=>function($query){
         $query->select('id','name');
       },'replies.user'=>function($query){
         $query->select('id','name');
@@ -37,7 +38,7 @@ class FileControllerV1 extends Controller
       $response=response()->stream(function() use ($threads){
         $file=fopen('php://output','w');
 
-        fputcsv($file,['ユーザ名','タイトル','投稿内容','返信者','返信タイトル','返信内容',]);
+        fputcsv($file,['ユーザ名','タイトル','投稿内容','投稿時間','返信者','返信タイトル','返信内容','返信時間']);
 
         $flg=false;
         foreach($threads as $thread){
@@ -45,6 +46,7 @@ class FileControllerV1 extends Controller
             $thread->user->name,
             $thread->thread_title,
             $thread->post_content,
+            $thread->created_at,
           ];
           
           if($thread->replies->isNotEmpty()){
@@ -54,13 +56,15 @@ class FileControllerV1 extends Controller
                 $reply->user->name,
                 $reply->reply_title,
                 $reply->reply_content,
+                $reply->created_at,
               ]));
               $flg=true;
               }else{
-                fputcsv($file,array_merge(['','',''],[
+                fputcsv($file,array_merge(['','','',''],[
                   $reply->user->name,
                   $reply->reply_title,
                   $reply->reply_content,
+                  $reply->created_at,
                 ]));
               }
             }

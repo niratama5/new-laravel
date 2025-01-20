@@ -126,7 +126,6 @@ class FileControllerV0 extends Controller
 
     public function userCsvImport(Request $request)
     {
-      dd($request);
       $request->validate([
         'user_csv'=>'required|file|mimes:csv,txt|max:2048'
       ]);
@@ -135,9 +134,20 @@ class FileControllerV0 extends Controller
 
       $tempPath=$userList->getRealPath();
 
-      $userList=fopen($tempPath,'r');
+      $userListHandle=fopen($tempPath,'r');
 
-      dd($userList);
+      $headers=fgetcsv($userListHandle,100,';');
+      
+      while(($row=fgetcsv($userListHandle,1000,';'))!==false){
+      $data=array_combine($headers,$row);
+        User::create([
+          'name'=>$data['ニックネーム'],
+          'email'=>$data['メールアドレス'],
+          'password'=>$data['パスワード'],
+          'created_at'=>$data['登録日'],
+        ]);
+      }
+      fclose($userListHandle);
     }
 
     public function importCsv(Request $request)
@@ -170,12 +180,6 @@ class FileControllerV0 extends Controller
         }
       }
       fclose($csvFile);
-      
-
-      
-      
-
-      
     }
 
     public function create()
