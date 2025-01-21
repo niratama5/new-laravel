@@ -3,6 +3,10 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('記事一覧') }}
         </h2>
+        <form action="{{route('search')}}">
+          <input type="search" name="search" placeholder="キーワードを入力" aria-label="検索...">
+          <button type="submit" value="検索">検索</button>
+        </form>
     </x-slot>
 
     @if(session('success'))

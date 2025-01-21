@@ -5,6 +5,7 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\NewPostController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\TempRegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::post('/temp-register/mail',[TempRegisterController::class,'register'])->n
 Route::get('/temp-register/confirm/{token}', [TempRegisterController::class, 'confirm'])->name('temp_register.confirm');
 
 Route::get('/threads',[ThreadController::class,'index'])->name('threads')->withoutMiddleware('auth');
+Route::get('/search',[SearchController::class,'search'])->name('search');
 
 Route::get('/threads/show-create',[ThreadController::class,'create'])->name('posts.create');
 Route::post('/threads/create',[ThreadController::class,'store'])->name('posts.save');
