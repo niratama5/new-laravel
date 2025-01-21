@@ -10,11 +10,11 @@ class BulletinThreadReply extends Model
     use HasFactory;
     
     protected $table='bulletin_thread_reply';
-    protected $primaryKey='reply_id';
+    protected $primaryKey='id';
 
     protected $fillable=[
       'user_id',
-      'thread_id',
+      'bulletin_thread_id',
       'reply_title',
       'reply_content',
     ];
@@ -26,6 +26,6 @@ class BulletinThreadReply extends Model
 
     public function thread()
     {
-      return $this->belongsTo(BulletinThread::class,'thread_id');
+      return $this->belongsTo(BulletinThread::class,'bulletin_thread_id');
     }
 }

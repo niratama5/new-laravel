@@ -16,7 +16,7 @@
                       <h4>{{$thread->thread_title}}</h4>
                       <p>{{$thread->post_content}}</p>
                       <p>{{$thread->created_at->format('Y-m-d H:i')}}</p>
-                      <form method="POST" action="{{ route('rollback', $thread->thread_id) }}">
+                      <form method="POST" action="{{ route('rollback', $thread->id) }}">
                       @csrf
                       @method('PUT')
                         <button type="submit">復元</button>

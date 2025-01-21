@@ -18,7 +18,7 @@
                       <h4>{{$thread->thread_title}}</h4>
                       <p>{{$thread->post_content}}</p>
                       <p>{{$thread->created_at->format('Y-m-d H:i')}}</p>
-                      <a href="{{ route('threads.edit', $thread->thread_id) }}" class="text-blue-500">内容の編集</a>
+                      <a href="{{ route('threads.edit', $thread->id) }}" class="text-blue-500">内容の編集</a>
                     @endforeach
 
                     @if ($threads->isEmpty())

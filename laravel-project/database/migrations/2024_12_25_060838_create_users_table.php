@@ -14,19 +14,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name',32)
-                  ->nullable(false);
-            $table->string('password',255)
-                  ->nullable(false);
-            $table->string('email',20)
-                  ->nullable(false)
-                  ->unique();
+            $table->string('name');
+            $table->string('password');
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->datetime('created_at')
-            ->default(Carbon::now());
-            $table->datetime('updated_at')
-            ->default(Carbon::now());
+            $table->timestamps();
             $table->datetime('deleted_at')
             ->nullable()->default(null);
         });
@@ -38,6 +31,6 @@ return new class extends Migration
     public function down(): void
 
     {
-        Schema::dropIfExists('users');
+       
     }
 };

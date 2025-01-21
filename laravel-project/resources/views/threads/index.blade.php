@@ -25,11 +25,11 @@
                             <p>{{$thread->post_content}}</p>
                             <p>{{$thread->created_at->format('Y-m-d H:i')}}</p>
                             <div>
-                              <a href="{{ route('threads.show-reply', $thread->thread_id) }}" class="bg-white px-4 overflow-hidden shadow-sm sm:rounded-lg">返信</a>  
+                              <a href="{{ route('threads.show-reply', $thread->id) }}" class="bg-white px-4 overflow-hidden shadow-sm sm:rounded-lg">返信</a>  
                             </div>
-                            <button class="bg-white h-19px px-4 overflow-hidden shadow-sm sm:rounded-lg" id="show_replies_{{$thread->thread_id}}" data-thread-id="{{$thread->thread_id}}">返信を表示</button>
+                            <button class="bg-white h-19px px-4 overflow-hidden shadow-sm sm:rounded-lg" id="show_replies_{{$thread->id}}" data-thread-id="{{$thread->id}}">返信を表示</button>
                           </div>
-                          <div class="ml-8 block" data-replies="{{$thread->thread_id}}" id="replies_container_{{$thread->thread_id}}"></div>
+                          <div class="ml-8 block" data-replies="{{$thread->id}}" id="replies_container_{{$thread->id}}"></div>
                         @endforeach
                         @if ($threads->isEmpty())
                           <p class="text-gray-500">まだ記事がありません</p>

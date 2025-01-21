@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bulletin_thread', function (Blueprint $table) {
-            $table->id('thread_id');
-
-            $table->unsignedBigInteger('user_id');
+            $table->id('id');
 
             $table->string('thread_title',20)
                   ->nullable(false);
@@ -27,10 +25,8 @@ return new class extends Migration
             $table->boolean('deleted_at')
                   ->default(false);
 
-            $table->foreign('user_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
         });
     }
 

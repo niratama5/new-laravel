@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                   <div id="update_container">
                     <h1>編集画面</h1>
-                    <form action="{{route('threads.update',$thread->thread_id)}}" method="POST">
+                    <form action="{{route('threads.update',$thread->id)}}" method="POST">
                         @csrf
                         @method('PUT')
                         <div id="thread_title_container">
@@ -26,7 +26,7 @@
                         </div>
                         <button type="submit" id="post_button">投稿</button>
                     </form>
-                    <form action="{{route('threads.logical_delete',$thread->thread_id)}}" method="POST">
+                    <form action="{{route('threads.logical_delete',$thread->id)}}" method="POST">
                       @csrf
                       @method('DELETE')
                       <button type="submit">削除</button>

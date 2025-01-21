@@ -40,50 +40,19 @@ class ReplyController extends Controller
       BulletinThreadReply::create([
         'reply_title'=>$validated['reply_title'],
         'reply_content'=>$validated['reply_content'],
-        'thread_id'=>$id,
+        'bulletin_thread_id'=>$id,
         'user_id'=>Auth::id(),
       ]);
 
       return redirect()->route('threads')->with('success','返信が投稿されました！');
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 
     //返信取得用試作型API
     public function getReplies($threadId)
     {
-      $replies=BulletinThreadReply::with('user')->where('thread_id',$threadId)->get();
+      $replies=BulletinThreadReply::with('user')->where('bulletin_thread_id',$threadId)->get();
 
       return response()->json($replies);
     }

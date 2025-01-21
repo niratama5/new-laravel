@@ -14,7 +14,7 @@
                     <p>{{$thread->post_content}}</p>
                     <p>{{$thread->created_at->format('Y-m-d H:i')}}</p>
                   </div>
-                  <form  method="POST" action="{{route('threads.reply',$thread->thread_id)}}">
+                  <form  method="POST" action="{{route('threads.reply',$thread->id)}}">
                     @csrf
                     <label for="reply_title">
                       返信タイトル
